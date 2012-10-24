@@ -1,3 +1,4 @@
 *.exe
+ipch/
 Debug/
 DynamicProgramming/Debug/
