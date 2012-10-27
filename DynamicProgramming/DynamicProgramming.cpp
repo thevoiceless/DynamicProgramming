@@ -28,7 +28,7 @@ int main()
 		results[i] = new int [input.length() + 1];
 	}
 
-	calcResultsRow(results, 0, input);
+	calcResultsRow(results, input.length(), input);
 	//printLongestSubsequenceArray(results, input); //Debug output for the results array
 	longestSubsequence = trace(results, input, input.length(), input.length());
 
@@ -77,18 +77,23 @@ void printLongestSubsequenceArray(int**& results, string input)
 
 void calcResultsRow(int**& results, int row, string input)
 {
-	calcResultsCol(results, row, 0, input);
-
-	if (input.length() > row)
+	if (row > 0)
 	{
-		calcResultsRow(results, row + 1, input);
+		calcResultsRow(results, row - 1, input);
 	}
+
+	calcResultsCol(results, row, input.length(), input);
 
 	return;
 }
 
 void calcResultsCol(int**& results, int row, int col, string input)
 {
+	if (col > 0)
+	{
+		calcResultsCol(results, row, col-1, input);
+	}
+
 	if (row == 0 || col == 0)
 	{
 		results[row][col] = 0;
@@ -103,11 +108,6 @@ void calcResultsCol(int**& results, int row, int col, string input)
 		{
 			results[row][col] = max(results[row-1][col], results[row][col-1]);
 		}
-	}
-
-	if (input.length() > col)
-	{
-		calcResultsCol(results, row, col+1, input);
 	}
 
 	return;
